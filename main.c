@@ -92,7 +92,7 @@ int main(int argc, char * argv[]){
   Node * root = malloc(sizeof(Node));
 
   if(argc != 2){
-    printf("Please, provide dictoinary filename\n");
+    printf("Please, provide dictionary filename\n");
     return -1;
   }
   
