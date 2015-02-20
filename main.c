@@ -22,7 +22,7 @@ bool Init(Node * root, char * filename){
   }
   
   while(fgets(buf, sizeof(buf), f)){
-    printf("+Dict line: %s", buf);
+    //   printf("+Dict line: %s", buf);
     char * ch = buf;
     Node * currNode = root;
     do{
@@ -83,7 +83,7 @@ bool Search(Node * root, char * str){
        currNode=currNode->firstChild;
     }
     str++;
-  }while(*str != '\0');
+  }while(*str);
   return true;  
 }
 
@@ -100,8 +100,11 @@ int main(int argc, char * argv[]){
     return -2;
   }
 
+  printf("Please, enter string to search\n");
+  printf("To exit enter \"exit\"\n");
   while(fgets(buf, sizeof(buf), stdin)){
     if(strcmp("exit\n",buf) == 0){
+      printf("Bye.\n");
       return 0;
     }
     if(Search(root,buf)){
