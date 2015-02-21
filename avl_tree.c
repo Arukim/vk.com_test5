@@ -5,6 +5,8 @@ Node * const_node(char key, void * data){
   Node * node = malloc(sizeof(Node));
   node->key = key;
   node->data = data;
+  node->left = NULL;
+  node->right = NULL;
   return node;
 }
 
@@ -90,4 +92,16 @@ Node * avl_find(Node * node, char key){
   }else{
     return avl_find(node->right, key);
   }
+}
+
+void avl_print(Node * node){
+  if(node == NULL){
+    printf(";\n");
+    return;
+  }
+  printf("%c\n", node->key);
+  printf("<");
+  avl_print(node->left);
+  printf(">");
+  avl_print(node->right);
 }

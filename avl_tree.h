@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef AVL_TREE_H
 #define AVL_TREE_H
@@ -14,5 +15,6 @@ typedef struct Node {
 
 Node * avl_insert(Node * node, char key, void * data);
 Node * avl_find(Node * node, char key);
+void avl_print(Node * node);
 
 #endif // AVL_TREE_H

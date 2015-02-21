@@ -8,8 +8,6 @@
 
 #define LINE_MAX 256
 
-
-
 bool Init(Node ** root, char * filename){
   FILE * f;
   char buf[LINE_MAX];
@@ -27,50 +25,47 @@ bool Init(Node ** root, char * filename){
     //   printf("+Dict line: %s", buf);
     char * ch = buf;
     Node * currNode = *root;
+
     do{
-      currNode->data = avl_insert((Node *)&currNode->data, *ch, NULL);
-      currNode = avl_find(currNode, *ch);
-      ch++;
-    }while(*ch);
+      Node * oldNode = avl_find(currNode->data, *ch);
+      if(oldNode != NULL){
+	currNode = oldNode;
+	continue;
+      }
+      
+      currNode->data = avl_insert(currNode->data, *ch, NULL);
+      currNode = avl_find(currNode->data, *ch);
+
+    }while(*ch++);
   }
   
   fclose(f);
+
   return true;
 }
 
-bool Search(Node * root, char * str){
-  /*
-  int pos = 0;
-  Node * currNode = root->firstChild;
+bool Search(Node * node, char * str){
+  node = node->data;
   do{
-      while(true){
-        
-      if(currNode->ch == *str){
-	break;
-      }
-      if(currNode->nextSibling != NULL){
-	currNode = currNode->nextSibling;
-      }else{
-	break;
-      }
+    //  printf("Looking for %c\n", *str);
+    //  avl_print(node);
+    node = avl_find(node, *str);
+
+    if(node == NULL){
+      return false;
     }
 
-    if(currNode->ch != *str){
-        return false;
-    }
+    node = node->data;
 
-    if(currNode->firstChild != NULL){
-       currNode=currNode->firstChild;
-    }
     str++;
-    }while(*str);*/
+    }while(*str);
   return true;  
 }
 
 
 int main(int argc, char * argv[]){
   char buf[LINE_MAX];
-  Node * root;
+  Node * root = NULL;
 
   if(argc != 2){
     printf("Please, provide dictionary filename\n");
@@ -94,4 +89,6 @@ int main(int argc, char * argv[]){
       printf("NO\n");
     }    
   }
+
+  return 0;
 }
