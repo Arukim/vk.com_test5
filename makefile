@@ -1,10 +1,13 @@
-all: dictsearch.exe
+all: dictsearch
 
-dictsearch.exe: dictsearch.o
-	gcc -o dictsearch.exe dictsearch.o
+dictsearch: dictsearch.o avl_tree.o
+	gcc -o dictsearch dictsearch.o avl_tree.o
 
-dictsearch.o: main.c
-	gcc -c -o dictsearch.o main.c
+avl_tree.o: avl_tree.c
+	gcc -c avl_tree.c
+
+dictsearch.o: dictsearch.c
+	gcc -c dictsearch.c
 
 clean:
-	rm dictsearch.o dictsearch.exe
+	rm -f dictsearch.o dictsearch avl_tree.o
