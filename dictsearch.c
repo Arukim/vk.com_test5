@@ -27,21 +27,19 @@ bool Init(Node ** root, char * filename){
     //printf("+Dict line: %s", buf);
     char * ch = buf;
     Node * currNode = *root;
-    bool isValid = true;
 
     do{
       if((*ch < CH_MIN || *ch > CH_MAX) && *ch != '\n'){
-	isValid = false;
 	break;
       }
     }while(*++ch);
 
-    if(!isValid){
+    if(*ch){
       // printf("Not valid input\n");
       continue;
     }
-    ch = buf;
     
+    ch = buf;
     do{
       //   printf("Inserting 0x%02X\n", *ch);
       
@@ -88,6 +86,10 @@ int main(int argc, char * argv[]){
   char buf[LINE_MAX];
   Node * root = NULL;
 
+  #ifdef DEBUG
+  printf("DEBUG\n");
+  #endif
+  
   if(argc != 2){
     printf("Please, provide dictionary filename\n");
     return -1;

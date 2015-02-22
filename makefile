@@ -2,7 +2,7 @@ CFLAGS = -Wall
 
 all: dictsearch
 
-debug: CFLAGS += -ggdb3
+debug: CFLAGS += -ggdb3 -DDEBUG
 debug: all
 
 dictsearch: dictsearch.o avl_tree.o
