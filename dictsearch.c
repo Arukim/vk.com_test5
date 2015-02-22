@@ -95,7 +95,7 @@ int main(int argc, char * argv[]){
     return -1;
   }
   
-  if(!Init(&root, argv[1])){
+  if(!init(&root, argv[1])){
     return -2;
   }
 
@@ -106,7 +106,7 @@ int main(int argc, char * argv[]){
       printf("Bye.\n");
       return 0;
     }
-    if(Search(root,buf)){
+    if(search(root,buf)){
       printf("YES\n");
     }else{
       printf("NO\n");
