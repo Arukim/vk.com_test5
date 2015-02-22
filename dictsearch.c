@@ -10,7 +10,7 @@
 #define CH_MIN 32
 #define CH_MAX 127
 
-bool Init(Node ** root, char * filename){
+bool init(Node ** root, char * filename){
   FILE * f;
   char buf[LINE_MAX];
   
@@ -63,7 +63,7 @@ bool Init(Node ** root, char * filename){
   return true;
 }
 
-bool Search(Node * node, char * str){
+bool search(Node * node, char * str){
   node = node->data;
   do{
     //  printf("Looking for %c [0x%02X]\n", *str, *str);
