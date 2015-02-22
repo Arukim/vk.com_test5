@@ -7,6 +7,8 @@
 #include "avl_tree.h"
 
 #define LINE_MAX 256
+#define CH_MIN 32
+#define CH_MAX 127
 
 bool Init(Node ** root, char * filename){
   FILE * f;
@@ -22,21 +24,40 @@ bool Init(Node ** root, char * filename){
   *root = avl_insert(*root, 0, NULL);
   
   while(fgets(buf, sizeof(buf), f)){
-    //   printf("+Dict line: %s", buf);
+    //printf("+Dict line: %s", buf);
     char * ch = buf;
     Node * currNode = *root;
+    bool isValid = true;
 
     do{
+      if((*ch < CH_MIN || *ch > CH_MAX) && *ch != '\n'){
+	isValid = false;
+	break;
+      }
+    }while(*++ch);
+
+    if(!isValid){
+      // printf("Not valid input\n");
+      continue;
+    }
+    ch = buf;
+    
+    do{
+      //   printf("Inserting 0x%02X\n", *ch);
+      
       Node * oldNode = avl_find(currNode->data, *ch);
       if(oldNode != NULL){
+	//	printf("Found old node\n");
 	currNode = oldNode;
 	continue;
       }
       
       currNode->data = avl_insert(currNode->data, *ch, NULL);
+      //   printf("After 0x%02X insert\n", *ch);
+      // avl_print(currNode->data);
       currNode = avl_find(currNode->data, *ch);
 
-    }while(*ch++);
+    }while(*++ch);
   }
   
   fclose(f);
@@ -47,8 +68,8 @@ bool Init(Node ** root, char * filename){
 bool Search(Node * node, char * str){
   node = node->data;
   do{
-    //  printf("Looking for %c\n", *str);
-    //  avl_print(node);
+    //  printf("Looking for %c [0x%02X]\n", *str, *str);
+    //avl_print(node);
     node = avl_find(node, *str);
 
     if(node == NULL){

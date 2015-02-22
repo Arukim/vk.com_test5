@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #ifndef AVL_TREE_H
 #define AVL_TREE_H

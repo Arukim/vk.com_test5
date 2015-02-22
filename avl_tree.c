@@ -1,5 +1,8 @@
 // based on habrahabr.ru/post/150732/ - C++ implementation of avl-tree
+#include <stdio.h>
 #include "avl_tree.h"
+
+void print_impl(Node * node, int depth);
 
 Node * const_node(char key, void * data){
   Node * node = malloc(sizeof(Node));
@@ -7,6 +10,7 @@ Node * const_node(char key, void * data){
   node->data = data;
   node->left = NULL;
   node->right = NULL;
+  node->height = 1;
   return node;
 }
 
@@ -26,8 +30,8 @@ void fix_height(Node * node){
 
 Node * rotate_right(Node * node){ //правый поворот вокруг p
   Node* tmp = node->left;
-  node->left = node->right;
-  node->right = tmp;
+  node->left = tmp->right;
+  tmp->right = node;
 
   fix_height(node);
   fix_height(tmp);
@@ -36,8 +40,8 @@ Node * rotate_right(Node * node){ //правый поворот вокруг p
 
 Node * rotate_left(Node * node){ //левый поворот вокруг p
   Node* tmp = node->right;
-  node->right = node->left;
-  node->left = tmp;
+  node->right = tmp->left;
+  tmp->left = node;
 
   fix_height(node);
   fix_height(tmp);
@@ -94,14 +98,30 @@ Node * avl_find(Node * node, char key){
   }
 }
 
-void avl_print(Node * node){
+void avl_print(Node *node){
+  print_impl(node,0);
+}
+
+void print_impl(Node * node, int depth){
+  int i=0;
+  
   if(node == NULL){
     printf(";\n");
     return;
   }
-  printf("%c\n", node->key);
+
+  depth++;
+  printf("0x%02X\n", node->key);
+
+  for(i=0; i<depth; i++){
+    putchar('-');
+  }
   printf("<");
-  avl_print(node->left);
+  print_impl(node->left, depth);
+  
+  for(i=0; i<depth; i++){
+    putchar('-');
+  }
   printf(">");
-  avl_print(node->right);
+  print_impl(node->right, depth);
 }

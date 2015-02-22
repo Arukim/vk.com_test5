@@ -9,7 +9,7 @@ dictsearch: dictsearch.o avl_tree.o
 	gcc $(CFLAGS) dictsearch.o avl_tree.o -o dictsearch
 
 avl_tree.o: avl_tree.c
-	gcc -c $(CFLAGS) avl_tree.c
+	gcc -c $(CFLAGS) avl_tree.c avl_tree.h
 
 dictsearch.o: dictsearch.c
 	gcc -c $(CFLAGS) dictsearch.c
