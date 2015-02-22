@@ -60,6 +60,8 @@ bool init(Node ** root, char * filename){
   
   fclose(f);
 
+  printf("Nodes count: %d size: %dB\n", avl_nodes_count(), (int)sizeof(Node));
+  
   return true;
 }
 

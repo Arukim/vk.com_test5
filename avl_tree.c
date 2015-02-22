@@ -4,6 +4,8 @@
 
 void print_impl(Node * node, int depth);
 
+int _nodes_count = 0;
+
 Node * const_node(char key, void * data){
   Node * node = malloc(sizeof(Node));
   node->key = key;
@@ -11,6 +13,7 @@ Node * const_node(char key, void * data){
   node->left = NULL;
   node->right = NULL;
   node->height = 1;
+  _nodes_count++;
   return node;
 }
 
@@ -100,6 +103,10 @@ Node * avl_find(Node * node, char key){
 
 void avl_print(Node *node){
   print_impl(node,0);
+}
+
+int avl_nodes_count(){
+  return _nodes_count;
 }
 
 void print_impl(Node * node, int depth){
