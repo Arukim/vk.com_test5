@@ -5,18 +5,18 @@
 #define AVL_TREE_H
 
 #pragma pack(push,1)
-typedef struct Node {
+typedef struct avl_Node {
   char key;
   void * data;
   uint8_t height;
-  struct Node * left;
-  struct Node * right;
-}Node;
+  struct avl_Node * left;
+  struct avl_Node * right;
+}avl_Node;
 #pragma pack(pop)
 
-Node * avl_insert(Node * node, char key, void * data);
-Node * avl_find(Node * node, char key);
-void avl_print(Node * node);
+avl_Node * avl_insert(avl_Node * node, char key, void * data);
+avl_Node * avl_find(avl_Node * node, char key);
+void avl_print(avl_Node * node);
 int avl_nodes_count();
 
 #endif // AVL_TREE_H

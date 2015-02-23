@@ -10,7 +10,7 @@
 #define CH_MIN 32
 #define CH_MAX 127
 
-bool init(Node ** root, char * filename){
+bool init(avl_Node ** root, char * filename){
   FILE * f;
   char buf[LINE_MAX];
   
@@ -26,7 +26,7 @@ bool init(Node ** root, char * filename){
   while(fgets(buf, sizeof(buf), f)){
     //printf("+Dict line: %s", buf);
     char * ch = buf;
-    Node * currNode = *root;
+    avl_Node * currNode = *root;
 
     do{
       if((*ch < CH_MIN || *ch > CH_MAX) && *ch != '\n'){
@@ -43,7 +43,7 @@ bool init(Node ** root, char * filename){
     do{
       //   printf("Inserting 0x%02X\n", *ch);
       
-      Node * oldNode = avl_find(currNode->data, *ch);
+      avl_Node * oldNode = avl_find(currNode->data, *ch);
       if(oldNode != NULL){
 	//	printf("Found old node\n");
 	currNode = oldNode;
@@ -60,12 +60,12 @@ bool init(Node ** root, char * filename){
   
   fclose(f);
 
-  printf("Nodes count: %d size: %dB\n", avl_nodes_count(), (int)sizeof(Node));
+  printf("Nodes count: %d size: %dB\n", avl_nodes_count(), (int)sizeof(avl_Node));
   
   return true;
 }
 
-bool search(Node * node, char * str){
+bool search(avl_Node * node, char * str){
   node = node->data;
   do{
     //  printf("Looking for %c [0x%02X]\n", *str, *str);
@@ -86,7 +86,7 @@ bool search(Node * node, char * str){
 
 int main(int argc, char * argv[]){
   char buf[LINE_MAX];
-  Node * root = NULL;
+  avl_Node * root = NULL;
 
   #ifdef DEBUG
   printf("DEBUG\n");

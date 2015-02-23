@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include "avl_tree.h"
 
-void print_impl(Node * node, int depth);
+void print_impl(avl_Node * node, int depth);
 
 int _nodes_count = 0;
 
-Node * const_node(char key, void * data){
-  Node * node = malloc(sizeof(Node));
+avl_Node * const_node(char key, void * data){
+  avl_Node * node = malloc(sizeof(avl_Node));
   node->key = key;
   node->data = data;
   node->left = NULL;
@@ -17,22 +17,22 @@ Node * const_node(char key, void * data){
   return node;
 }
 
-uint8_t get_height(Node * node){
+uint8_t get_height(avl_Node * node){
   return node ? node->height : 0;
 }
 
-int get_bfactor(Node * node){
+int get_bfactor(avl_Node * node){
   return get_height(node->right) - get_height(node->left);
 }
 
-void fix_height(Node * node){
+void fix_height(avl_Node * node){
   uint8_t hl = get_height(node->left);
   uint8_t hr = get_height(node->right);
   node->height = (hl > hr ? hl : hr) + 1;
 }
 
-Node * rotate_right(Node * node){ //правый поворот вокруг p
-  Node* tmp = node->left;
+avl_Node * rotate_right(avl_Node * node){ //правый поворот вокруг p
+  avl_Node* tmp = node->left;
   node->left = tmp->right;
   tmp->right = node;
 
@@ -41,8 +41,8 @@ Node * rotate_right(Node * node){ //правый поворот вокруг p
   return tmp;
 }
 
-Node * rotate_left(Node * node){ //левый поворот вокруг p
-  Node* tmp = node->right;
+avl_Node * rotate_left(avl_Node * node){ //левый поворот вокруг p
+  avl_Node* tmp = node->right;
   node->right = tmp->left;
   tmp->left = node;
 
@@ -51,7 +51,7 @@ Node * rotate_left(Node * node){ //левый поворот вокруг p
   return tmp;
 }
 
-Node * balance(Node * node){ //балансировка узла
+avl_Node * balance(avl_Node * node){ //балансировка узла
   fix_height(node);
   
   if(get_bfactor(node) == 2){
@@ -71,7 +71,7 @@ Node * balance(Node * node){ //балансировка узла
   return node;
 }
 
-Node * avl_insert(Node * node, char key, void * data){
+avl_Node * avl_insert(avl_Node * node, char key, void * data){
   if(!node){
     return const_node(key, data);
   }
@@ -85,7 +85,7 @@ Node * avl_insert(Node * node, char key, void * data){
   return balance(node);
 }
 
-Node * avl_find(Node * node, char key){
+avl_Node * avl_find(avl_Node * node, char key){
   if(node == NULL){
     return NULL;
   }
@@ -101,7 +101,7 @@ Node * avl_find(Node * node, char key){
   }
 }
 
-void avl_print(Node *node){
+void avl_print(avl_Node *node){
   print_impl(node,0);
 }
 
@@ -109,7 +109,7 @@ int avl_nodes_count(){
   return _nodes_count;
 }
 
-void print_impl(Node * node, int depth){
+void print_impl(avl_Node * node, int depth){
   int i=0;
   
   if(node == NULL){
