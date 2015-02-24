@@ -6,12 +6,13 @@ void print_impl(avl_Node * node, int depth);
 
 int _nodes_count = 0;
 
-avl_Node * const_node(char key, void * data){
+avl_Node * const_node(char key){
   avl_Node * node = malloc(sizeof(avl_Node));
   node->key = key;
-  node->data = data;
+  node->data = NULL;
   node->left = NULL;
   node->right = NULL;
+  node->next = NULL;
   node->height = 1;
   _nodes_count++;
   return node;
@@ -71,15 +72,15 @@ avl_Node * balance(avl_Node * node){ //балансировка узла
   return node;
 }
 
-avl_Node * avl_insert(avl_Node * node, char key, void * data){
+avl_Node * avl_insert(avl_Node * node, char key){
   if(!node){
-    return const_node(key, data);
+    return const_node(key);
   }
 
   if(key < node->key){
-    node->left = avl_insert(node->left, key, data);
+    node->left = avl_insert(node->left, key);
   }else{
-    node->right = avl_insert(node->right, key, data);
+    node->right = avl_insert(node->right, key);
   }
 
   return balance(node);
